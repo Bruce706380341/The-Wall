@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<title>Wall</title>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.css'>
+</head>
+<body>
+	<a href = '/logout'>Logout</a>
+	<h3>{{user['first_name']}}</h3>
+	<p>alskfjd</p>
+
+	<form action = '/messages' method = "post">
+		<input type = 'hidden' name = 'user_id' value = "{{user['id']}}">
+		<input type = 'text' name = 'message'>
+		<input type = 'submit' value = 'create message'>
+	</form>
+
+	{% for x in messages %}
+		<p>{{x.first_name}} : {{x.message}}</p>
+
+		<form action = "/comments" method = 'post'>
+			<input type = 'hidden' name = 'user_id' value = "{{user['id']}}">
+			<input type = 'hidden' name = 'mes_id' value = "{{x.id}}">
+			Comment<input type = 'text' name = 'comment'>
+			<input type = 'submit' value = 'Create Comment'>
+		</form>
+		{% for y in comments %}
+			{% if y.messages_id == x.id %}
+				<p>comments{{y.first_name}} : {{y.comment}}</p>
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script>
+</body>
+</html>
